@@ -28,11 +28,11 @@ $ npm install --save preact typescript webpack ts-loader
 ```json
 {
   "compilerOptions": {
-  	"sourceMap": true,
-  	"module": "commonjs",
-  	"target": "es5",
-  	"jsx": "react",
-  	"jsxFactory": "h"
+    "sourceMap": true,
+    "module": "commonjs",
+    "target": "es5",
+    "jsx": "react",
+    "jsxFactory": "h"
   },
   "include": {
     "./src/**/*.tsx",
