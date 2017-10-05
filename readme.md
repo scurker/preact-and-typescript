@@ -124,7 +124,7 @@ export default class StatefulComponent extends Component<Props, State> {
 
 Functional components are components do not use state and are simple javascript functions accepting props and returns a single JSX/VDOM element.
 
-```js
+```jsx
 import { h } from 'preact';
 
 export interface Props {
@@ -147,6 +147,25 @@ export default function SomeFunctionalComponent({ value, optionalValue }: Props)
 <SomeFunctionalComponent /> // throws error, property "value" is missing
 <SomeFunctionalComponent value="foo" /> // ok
 <SomeFunctionalComponent value="foo" optionalValue={true} /> // throws error, value "true" is not assignable to type string
+```
+
+You can also use named variables with `FunctionalComponent<Props>`.
+
+```jsx
+import { h, FunctionalComponent } from 'preact';
+
+export interface Props {
+  value: string,
+  optionalValue?: string
+}
+
+export const SomeFunctionalComponent: FunctionalComponent<Props> = ({ value, optionalValue }: Props) => {
+  return (
+    <div>
+      {value} {optionalValue}
+    </div>
+  );
+};
 ```
 
 ## Components with Children
