@@ -6,14 +6,14 @@
 
 1. [Setup](#setup)
 	1. [Install Dependencies](#install-dependencies)
-	2. [Setup tsconfig](#tsconfig-json)
-	3. [Setup webpack config](#webpack-config-js)
+	2. [Setup tsconfig](#tsconfigjson)
+	3. [Setup webpack config](#webpackconfigjs)
 2. [Stateful Components](#stateful-components)
 3. [Functional Components](#functional-components)
 4. [Components With Children](#components-with-children)
 5. [Higher Order Components (HOC)](#higher-order-components-hoc)
 6. [Extending HTML Attributes](#extending-html-attributes)
-7. [Custom Elements / Web Components](#custom-elements-web-components)
+7. [Custom Elements / Web Components](#custom-elements--web-components)
 
 ## Setup
 
@@ -34,10 +34,10 @@ $ npm install --save preact typescript webpack ts-loader
     "jsx": "react",
     "jsxFactory": "h"
   },
-  "include": {
+  "include": [
     "./src/**/*.tsx",
     "./src/**/*.ts"
-  }
+  ]
 }
 ```
 
@@ -112,6 +112,8 @@ export default class StatefulComponent extends Component<Props, State> {
 }
 ```
 
+### Example Usage
+
 ```jsx
 <StatefulComponent /> // throws error, property "value" is missing
 <StatefulComponent value="foo" /> // ok
@@ -138,6 +140,8 @@ export default function SomeFunctionalComponent({ value, optionalValue }: Props)
   );
 }
 ```
+
+### Example Usage
 
 ```jsx
 <SomeFunctionalComponent /> // throws error, property "value" is missing
@@ -172,6 +176,8 @@ export default function ComponentWithChildren({ children }: Props) {
   )
 }
 ```
+
+### Example Usage
 
 ```jsx
 <ComponentWithChildren /> // ok
@@ -216,6 +222,8 @@ export default class ComponentWithHtmlAttributes extends Component<JSX.HtmlAttri
 }
 ```
 
+### Example Usage
+
 ```jsx
 <ComponentWithHtmlAttributes /> // ok
 <ComponentWithHtmlAttributes class="foo" /> // ok, valid html attribute
@@ -242,6 +250,9 @@ declare module JSX {
   }
 }
 ```
+
+### Example Usage
+
 
 ```jsx
 <my-custom-element /> // throws error, property "value" is missing
