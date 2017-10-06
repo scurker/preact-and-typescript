@@ -76,7 +76,7 @@ module.exports = {
 
 Stateful components are Preact components that use any combination of state and/or [lifecycle methods](https://preactjs.com/guide/api-reference#lifecycle-methods).
 
-```js
+```jsx
 import { h, Component } from 'preact';
 
 export interface Props {
@@ -172,7 +172,7 @@ export const SomeFunctionalComponent: FunctionalComponent<Props> = ({ value, opt
 
 It's likely at some point you will want to nest elements, and with Typescript you can validate that any children props are valid JSX elements.
 
-```js
+```jsx
 import { h } from 'preact';
 
 export interface Props {
@@ -219,13 +219,74 @@ export default function ComponentWithChildren({ children }: Props) {
 
 ## Higher Order Components (HOC)
 
-> TODO: document HOC usage
+Using Higher Order Components (HOC) allows for certain component logic to be reused and is a natural pattern for compositional components. An HOC is simply a function that takes a component and returns that component.
+
+```jsx
+// app/hoc.tsx
+
+import { h, AnyComponent, Component } from 'preact';
+
+export interface Props {
+  email: string
+}
+
+export interface State {
+  firstName: string,
+  lastName: string
+}
+
+function HOC<P extends Props>(SomeComponent: AnyComponent<any, any>) {
+  return class extends Component<P, State> {
+    componentDidMount() {
+      let { email } = this.props;
+      fetch(`/user/${email}`)
+        .then((response: any) => response.json())
+        .then(({ firstName, lastName }) => this.setState({ firstName, lastName }))
+    }
+
+    render(props, state) {
+      return <SomeComponent {...props} {...state} />;
+    }
+  }
+}
+```
+
+Then, you can wrap your components with your HOC simplifying view logic to potentially only *props*.
+
+
+```jsx
+// app/component.tsx
+
+import { h } from 'preact';
+import HOC from './hoc';
+
+export interface Props {
+  firstName: string,
+  lastName: string,
+  email: string
+}
+
+function FunctionalUserComponent({ firstName, lastName, email }: Props) {
+  return <div>{firstName} {lastName}: { email }</div>
+}
+
+export default HOC<{ email: string }>(FunctionalUserComponent);
+```
+
+### Example Usage
+
+```jsx
+// import FunctionalUserComponent from './app/component'
+
+<FunctionalUserComponent /> // throws error, property "email" is missing
+<FunctionalUserComponent email="foo@bar.com" /> // ok, first and last names are resolved by the HOC
+```
 
 ## Extending HTML Attributes
 
 If you have a component that passes down unknown HTML attributes using, you can extend `JSX.HtmlAttributes` to allow any valid HTML attribute for your component.
 
-```js
+```jsx
 import { h, Component } from 'preact';
 
 export interface Props {
@@ -257,7 +318,7 @@ For Typescript there is a special interface [`JSX.IntrinsicElements`](https://ww
 
 > typings.d.ts
 
-```js
+```jsx
 export interface MyCustomElementProps {
   value: string,
   optionalValue?: string
