@@ -235,7 +235,7 @@ export interface State {
   lastName: string
 }
 
-function HOC<P extends Props>(SomeComponent: AnyComponent<any, any>) {
+export default function HOC<P extends Props>(SomeComponent: AnyComponent<any, any>) {
   return class extends Component<P, State> {
     componentDidMount() {
       let { email } = this.props;
