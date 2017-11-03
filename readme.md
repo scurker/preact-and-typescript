@@ -328,7 +328,7 @@ Additionally, you can choose to replace a specific node by specifying a third ar
 import { h, render } from 'preact';
 import MyComponent from './MyComponent';
 
-const node: Element = document.getElementById('root') as Element;
+const node = document.getElementById('root') as Element;
 render(<MyComponent />, node, node.firstElementChild as Element);
 ```
 
