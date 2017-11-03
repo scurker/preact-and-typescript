@@ -13,7 +13,8 @@
 4. [Components With Children](#components-with-children)
 5. [Higher Order Components (HOC)](#higher-order-components-hoc)
 6. [Extending HTML Attributes](#extending-html-attributes)
-7. [Custom Elements / Web Components](#custom-elements--web-components)
+7. [Rendering](#rendering)
+8. [Custom Elements / Web Components](#custom-elements--web-components)
 
 ## Setup
 
@@ -308,6 +309,27 @@ export default class ComponentWithHtmlAttributes extends Component<JSX.HtmlAttri
 <ComponentWithHtmlAttributes /> // ok
 <ComponentWithHtmlAttributes class="foo" /> // ok, valid html attribute
 <ComponentWithHtmlAttributes foo="bar" /> // throws error, invalid html attribute
+```
+
+## Rendering
+
+Rendering components requires an `Element`. The second argument will append your component to your node:
+
+```jsx
+import { h, render } from 'preact';
+import MyComponent from './MyComponent';
+
+render(<MyComponent />, document.body as Element);
+```
+
+Additionally, you can choose to replace a specific node by specifying a third argument:
+
+```jsx
+import { h, render } from 'preact';
+import MyComponent from './MyComponent';
+
+const node: Element = document.getElementById('root') as Element;
+render(<MyComponent />, node, node.firstElementChild as Element);
 ```
 
 ## Custom Elements / Web Components
